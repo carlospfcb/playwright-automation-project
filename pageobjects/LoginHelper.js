@@ -1,12 +1,16 @@
 // pages/LoginPage.js
-const { fillInput, clickElement } = require('../utils/helpers');
+const { navigate, fillInput, clickElement, validateUrl } = require('../utils/helpers');
 
 class LoginPage {
   constructor(page) {
     this.page = page;
-    this.usernameField = page.locator('#username');
-    this.passwordField = page.locator('#username');
-    this.loginButton = page.locator('#username');
+    this.usernameField = '#user-name';
+    this.passwordField = '#password';
+    this.loginButton = '#login-button';
+  }
+
+  async navigateToURL() {
+    await navigate(this.page, 'https://www.saucedemo.com/');
   }
 
   async login(username, password) {
@@ -14,6 +18,11 @@ class LoginPage {
     await fillInput(this.page, this.passwordField, password);
     await clickElement(this.page, this.loginButton);
   }
+
+  async isLoginSuccessful() {
+    return await validateUrl(this.page, '/inventory');
+  }
 }
+
 
 module.exports = { LoginPage };

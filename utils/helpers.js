@@ -10,7 +10,7 @@ async function isElementVisible(page, selector) {
 
 //Navegar a una URL con espera
 async function navigate(page, url) {
-  await page.goto(url, { waitUntil: 'domcontentloaded' });
+  await page.goto(url);
 }
 
 // Click con espera
