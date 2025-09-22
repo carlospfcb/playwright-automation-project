@@ -1,11 +1,16 @@
 const { test, expect } = require('@playwright/test');
-const { LoginPage } = require('../pageobjects/Login');
+const { LoginPage } = require('../pageobjects/LoginHelper');
 
-test('Login exitoso', async ({ page }) => {
+let page; 
+
+test('Login Exitoso', async ({browser}) => {
+  // Crear un contexto y página manualmente
+  const context = await browser.newContext();
+  page = await context.newPage();
   const loginPage = new LoginPage(page);
-
-  await loginPage.navigate();
+  await loginPage.navigateToURL();
   await loginPage.login('standard_user', 'secret_sauce');
-
-  await expect(page).toHaveURL(/.*inventory/);
+  await expect(page).toHaveURL(/inventory/);
 });
+
+
