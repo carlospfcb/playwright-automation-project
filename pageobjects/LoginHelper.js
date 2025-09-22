@@ -1,28 +1,29 @@
-// pages/LoginPage.js
-const { navigate, fillInput, clickElement, validateUrl } = require('../utils/helpers');
+const { Helpers } = require('../utils/helpers');
 
 class LoginPage {
   constructor(page) {
     this.page = page;
+    this.helpers = new Helpers(page); // instanciamos Helpers aquí
+
+    // Selectores
     this.usernameField = '#user-name';
     this.passwordField = '#password';
     this.loginButton = '#login-button';
   }
 
   async navigateToURL() {
-    await navigate(this.page, 'https://www.saucedemo.com/');
+    await this.helpers.navigate('https://www.saucedemo.com/');
   }
 
   async login(username, password) {
-    await fillInput(this.page, this.usernameField, username);
-    await fillInput(this.page, this.passwordField, password);
-    await clickElement(this.page, this.loginButton);
+    await this.helpers.fillInput(this.usernameField, username);
+    await this.helpers.fillInput(this.passwordField, password);
+    await this.helpers.clickElement(this.loginButton);
   }
 
   async isLoginSuccessful() {
-    return await validateUrl(this.page, '/inventory');
+    return await this.helpers.validateUrl('/inventory');
   }
 }
-
 
 module.exports = { LoginPage };

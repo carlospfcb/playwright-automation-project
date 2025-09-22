@@ -1,62 +1,64 @@
-// Verificar si un elemento es visible
-async function isElementVisible(page, selector) {
-  try {
-    await page.waitForSelector(selector, { state: 'visible' });
-    return true;
-  } catch {
-    return false;
+class Helpers {
+  constructor(page) {
+    this.page = page;
+  }
+
+  // Verificar si un elemento es visible
+  async isElementVisible(target) {
+    const locator = typeof target === 'string' ? this.page.locator(target) : target;
+    try {
+      await locator.waitFor({ state: 'visible' });
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  // Navegar a una URL con espera
+  async navigate(url) {
+    await this.page.goto(url);
+  }
+
+  // Click con espera
+  async clickElement(target) {
+    const locator = typeof target === 'string' ? this.page.locator(target) : target;
+    await locator.waitFor({ state: 'visible' });
+    await locator.click();
+  }
+
+  // Rellenar un campo de texto
+  async fillInput(target, value) {
+    const locator = typeof target === 'string' ? this.page.locator(target) : target;
+    await locator.waitFor({ state: 'visible' });
+    await locator.fill(value);
+  }
+
+  // Seleccionar opción de un dropdown
+  async selectOption(target, optionValue) {
+    const locator = typeof target === 'string' ? this.page.locator(target) : target;
+    await locator.waitFor({ state: 'visible' });
+    await locator.selectOption(optionValue);
+  }
+
+  // Marcar un checkbox
+  async checkElement(target) {
+    const locator = typeof target === 'string' ? this.page.locator(target) : target;
+    await locator.waitFor({ state: 'visible' });
+    await locator.check();
+  }
+
+  // Obtener texto de un elemento
+  async getText(target) {
+    const locator = typeof target === 'string' ? this.page.locator(target) : target;
+    await locator.waitFor();
+    return await locator.textContent();
+  }
+
+  // Validar URL actual
+  async validateUrl(expectedUrl) {
+    const currentUrl = this.page.url();
+    return currentUrl.includes(expectedUrl);
   }
 }
 
-//Navegar a una URL con espera
-async function navigate(page, url) {
-  await page.goto(url);
-}
-
-// Click con espera
-async function clickElement(page, selector) {
-  await page.waitForSelector(selector, { state: 'visible' });
-  await page.click(selector);
-}
-
-// Rellenar un campo de texto
-async function fillInput(page, selector, value) {
-  await page.waitForSelector(selector, { state: 'visible' });
-  await page.fill(selector, value);
-}
-
-// Seleccionar opción de un dropdown
-async function selectOption(page, selector, optionValue) {
-  await page.waitForSelector(selector, { state: 'visible' });
-  await page.selectOption(selector, optionValue);
-}
-
-// Marcar un checkbox
-async function checkElement(page, selector) {
-  await page.waitForSelector(selector, { state: 'visible' });
-  await page.check(selector);
-}
-
-// Obtener texto de un elemento
-async function getText(page, selector) {
-  await page.waitForSelector(selector);
-  return await page.textContent(selector);
-}
-
-// Obtener la URL actual
-async function validateUrl(page, expectedUrl) {
-  const currentUrl = page.url();
-  return currentUrl.includes(expectedUrl); 
-  // también podrías usar === si quieres coincidencia exacta
-}
-
-module.exports = {
-  isElementVisible,
-  clickElement,
-  fillInput,
-  selectOption,
-  checkElement,
-  getText,
-  navigate,
-  validateUrl
-};
+module.exports = { Helpers };
