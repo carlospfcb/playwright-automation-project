@@ -3,17 +3,6 @@ class Helpers {
     this.page = page;
   }
 
-  // Verificar si un elemento es visible
-  async isElementVisible(target) {
-    const locator = typeof target === 'string' ? this.page.locator(target) : target;
-    try {
-      await locator.waitFor({ state: 'visible' });
-      return true;
-    } catch {
-      return false;
-    }
-  }
-
   // Navegar a una URL con espera
   async navigate(url) {
     await this.page.goto(url);
