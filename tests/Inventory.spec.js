@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 // const LoginPage = require('../pageobjects/LoginHelper');
-const { LoginPage } = require('../pageobjects/LoginHelper');
+const { LoginPage } = require('../pageobjects/LoginPage');
 const { InventoryPage } = require('../pageobjects/InventoryPage'); 
 
 let page; 

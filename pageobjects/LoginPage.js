@@ -6,9 +6,9 @@ class LoginPage {
     this.helpers = new Helpers(page); // instanciamos Helpers aquí
 
     // Selectores
-    this.usernameField = '#user-name';
-    this.passwordField = '#password';
-    this.loginButton = '#login-button';
+    this.usernameField = page.locator('#user-name');
+    this.passwordField = page.locator('#password');
+    this.loginButton = page.locator('#login-button');
   }
 
   async navigateToURL() {

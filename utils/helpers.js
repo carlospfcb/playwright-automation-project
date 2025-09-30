@@ -20,36 +20,31 @@ class Helpers {
   }
 
   // Click con espera
-  async clickElement(target) {
-    const locator = typeof target === 'string' ? this.page.locator(target) : target;
+  async clickElement(locator) {
     await locator.waitFor({ state: 'visible' });
     await locator.click();
   }
 
   // Rellenar un campo de texto
-  async fillInput(target, value) {
-    const locator = typeof target === 'string' ? this.page.locator(target) : target;
+  async fillInput(locator, value) {
     await locator.waitFor({ state: 'visible' });
     await locator.fill(value);
   }
 
   // Seleccionar opción de un dropdown
-  async selectOption(target, optionValue) {
-    const locator = typeof target === 'string' ? this.page.locator(target) : target;
+  async selectOption(locator, optionValue) {
     await locator.waitFor({ state: 'visible' });
     await locator.selectOption(optionValue);
   }
 
   // Marcar un checkbox
-  async checkElement(target) {
-    const locator = typeof target === 'string' ? this.page.locator(target) : target;
+  async checkElement(locator) {
     await locator.waitFor({ state: 'visible' });
     await locator.check();
   }
 
   // Obtener texto de un elemento
-  async getText(target) {
-    const locator = typeof target === 'string' ? this.page.locator(target) : target;
+  async getText(locator) {
     await locator.waitFor();
     return await locator.textContent();
   }
